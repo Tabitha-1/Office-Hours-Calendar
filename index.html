@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabitha's Office Hours Calendar</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(120deg, #e3d0f7 0%, #b388f0 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(120, 68, 173, 0.13);
+      max-width: 400px;
+      margin: 48px auto;
+      padding: 36px 28px 26px 28px;
+    }
+
+    .header {
+      color: #8843d1;
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .calendar {
+      margin-bottom: 23px;
+    }
+
+    .subheader {
+      color: #ad7be4;
+      margin-bottom: 10px;
+      font-size: 1.15em;
+      text-align: center;
+    }
+
+    ul.office-hours {
+      list-style: none;
+      padding-left: 0;
+      color: #66398a;
+      font-size: 1.05em;
+      text-align: center;
+      margin: 0 0 10px 0;
+    }
+
+    ul.office-hours li {
+      padding: 4px 0;
+    }
+
+    hr {
+      border: none;
+      border-bottom: 1px solid #daaaff;
+      margin: 30px 0 18px 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      padding: 10px;
+      border-radius: 7px;
+      border: 1px solid #ad7be4;
+      font-size: 1em;
+      background: #faf6ff;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="date"]:focus {
+      border-color: #8843d1;
+    }
+
+    button[type="submit"],
+    .share-btn,
+    .ok-btn {
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #b388f0;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 6px;
+      font-size: 1.09em;
+      letter-spacing: 0.5px;
+      transition: background 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button[type="submit"]:hover,
+    .share-btn:hover,
+    .ok-btn:hover {
+      background: #a26ee7;
+    }
+
+    .popup {
+      color: #66398a;
+      background: #f4eaff;
+      border-radius: 10px;
+      padding: 25px 15px;
+      text-align: center;
+      margin-top: 16px;
+      box-shadow: 0 3px 12px rgba(120, 68, 173, 0.10);
+      font-size: 1em;
+      z-index: 1;
+      position: relative;
+    }
+
+    #sharePopup {
+      position: fixed;
+      left: 50%;
+      top: 25vh;
+      transform: translateX(-50%);
+      max-width: 360px;
+      width: 80vw;
+      background: #e3d0f7;
+      border: 2px solid #b388f0;
+      box-shadow: 0 6px 24px #b388f026;
+    }
+
+    @media (max-width: 470px) {
+      .container {
+        padding: 18px 6vw 18px 6vw;
+        max-width: 98vw;
+      }
+
+      .popup,
+      #sharePopup {
+        font-size: 0.98em;
+        padding: 18px 6vw;
+      }
+    }
+  </style>
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("If6lAZMimMw31ymEM"); // Your public API key (User ID)
+    })();
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header"> Welcome to <br> Tabitha's <br>🌷 Office Hours 🌷</div>
+    <div class="calendar">
+      <div class="office-hours-intro" style="text-align:center; color:#66398a; margin-bottom:10px;">
+        During office hours, you can expect a relaxed, interactive Zoom session lasting about an hour (sometimes longer if there’s
+        interest).<br><br> These sessions are for Q&amp;A, sharing tips from me &amp; others, and creating a supportive community to
+        discuss what’s working for everyone.
+      </div>
+      <br>
+      <div class="subheader">Schedule</div>
+      <ul class="office-hours">
+        <li><b>Monday:</b> 5:00 PM – 6:00 PM</li>
+        <li><b>Wednesday:</b> 7:00 PM – 8:00 PM</li>
+        <li><b>Saturday:</b> 10:00 AM – 11:00 AM</li>
+      </ul>
+    </div>
+    <hr />
+    <div class="subheader">Reserve Your Spot</div>
+    <form id="rsvpForm">
+      <input type="text" name="first_name" placeholder="First Name" required>
+      <input type="text" name="ig_handle" placeholder="IG Handle" required>
+      <input type="email" name="user_email" placeholder="Email Address" required>
+      <input type="date" name="date" required>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="popup" id="thankYouPopup" style="display: none;">
+      Thank you for reserving your spot!<br>
+      You’ll receive an invitation by email from “hello@UnleashYourWins.com”
+      <br>
+      (check your spam if you don’t find it in your inbox within 24 hours).
+      <br><br>
+      I look forward to seeing you there. Feel free to come with questions &amp; be ready to take notes. <br><br>🌞🌷<br>
+      Tabitha
+      <br><br>
+      <button id="shareBtn" class="share-btn">Share With A Friend</button>
+    </div>
+    <!-- Share instructions popup (hidden by default) -->
+    <div class="popup" id="sharePopup" style="display: none;">
+      The link has been copied to your clipboard!<br><br>
+      <b>How to share:</b> <br>
+      Paste the link into a text message, Instagram DM, email, or anywhere else you want your friend to find it.<br><br>
+      <button class="ok-btn" onclick="document.getElementById('sharePopup').style.display='none';">OK, got it!</button>
+    </div>
+  </div>
+  <script>
+    document.getElementById('rsvpForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      emailjs.sendForm('service_qqgi4ze', 'template_azq2i2p', this)
+        .then(function () {
+          document.getElementById('thankYouPopup').style.display = 'block';
+          document.getElementById('rsvpForm').reset();
+        }, function (error) {
+          alert('Sorry, there was an error sending your RSVP. Please try again.');
+        });
+    });
+
+    // Share button logic
+    document.getElementById('shareBtn').onclick = function () {
+      navigator.clipboard.writeText(window.location.href).then(function () {
+        document.getElementById('sharePopup').style.display = 'block';
+      });
+    };
+  </script>
+</body>
+
+</html>
